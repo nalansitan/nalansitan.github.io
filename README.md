@@ -4,6 +4,8 @@
 [Astro Cactus](https://github.com/chrismwilliams/astro-theme-cactus) 的个人博客，使用
 GitHub Actions 自动部署到 GitHub Pages。
 
+博客地址：[https://blog.nalansitan.com](https://blog.nalansitan.com)
+
 ## 本地开发
 
 ```bash
