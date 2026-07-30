@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="关于" description="关于 Nalansitan 和这个博客。">
+  <article class="about">
+    <p class="eyebrow">ABOUT</p>
+    <h1>你好，我是<br />Nalansitan。</h1>
+    <div class="content">
+      <p>这是我的个人博客，用来记录技术实践、阅读笔记和长期思考。</p>
+      <p>我相信好的写作不只是输出结论，也是在整理自己的认知。希望这里的内容对未来的我，以及偶然来到这里的你，都有一点价值。</p>
+      <p>网站使用 Astro 和 Markdown 构建，通过 GitHub Actions 发布到 GitHub Pages。</p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .eyebrow { color: var(--accent); font-size: .76rem; font-weight: 700; letter-spacing: .18em; }
+  h1 { font-size: clamp(2.7rem, 9vw, 4.8rem); margin: 16px 0 56px; }
+  .content {
+    border-left: 2px solid var(--accent);
+    color: var(--muted);
+    font-family: Georgia, "Noto Serif SC", serif;
+    font-size: 1.15rem;
+    padding-left: 28px;
+  }
+</style>
