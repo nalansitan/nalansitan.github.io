@@ -1,0 +1,9 @@
+---
+import type { GetStaticPaths } from "astro";
+import Page, { getTagPagePaths } from "../../../tags/[tag]/[...page].astro";
+
+export const getStaticPaths = ((context) =>
+	getTagPagePaths(context, "en")) satisfies GetStaticPaths;
+---
+
+<Page {...Astro.props} />

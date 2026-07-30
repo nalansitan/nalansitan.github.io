@@ -1,0 +1,8 @@
+---
+import type { GetStaticPaths } from "astro";
+import Page, { getNotePaths } from "../../notes/[...slug].astro";
+
+export const getStaticPaths = (() => getNotePaths("en")) satisfies GetStaticPaths;
+---
+
+<Page {...Astro.props} />

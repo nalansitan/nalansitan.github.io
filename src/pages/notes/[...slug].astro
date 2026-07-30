@@ -1,0 +1,41 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import Note from "@/components/note/Note.astro";
+import { getAllNotes, getTranslatedNote } from "@/data/post";
+import { defaultLocale, getLocaleFromUrl, type Locale, localizePath } from "@/i18n";
+import PageLayout from "@/layouts/Base.astro";
+
+// if you're using an adaptor in SSR mode, getStaticPaths wont work -> https://docs.astro.build/en/guides/routing/#modifying-the-slug-example-for-ssr
+export const getNotePaths = async (locale: Locale) => {
+	const allNotes = await getAllNotes(locale);
+	return allNotes.map((note) => ({
+		params: { slug: note.data.route },
+		props: { note },
+	}));
+};
+
+export const getStaticPaths = (() => getNotePaths(defaultLocale)) satisfies GetStaticPaths;
+
+export type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { note } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const alternateLocale = locale === "en" ? "zh-CN" : "en";
+const translatedNote = await getTranslatedNote(note.data.translationKey, alternateLocale);
+const alternatePath = translatedNote
+	? localizePath(`/notes/${translatedNote.data.route}/`, alternateLocale)
+	: undefined;
+
+const meta = {
+	description:
+		note.data.description ||
+		(locale === "en"
+			? `Read this note published on ${note.data.publishDate.toLocaleDateString("en")}.`
+			: `阅读发布于 ${note.data.publishDate.toLocaleDateString("zh-CN")} 的随笔。`),
+	title: note.data.title,
+};
+---
+
+<PageLayout meta={{ ...meta, alternatePath }}>
+	<Note as="h1" note={note} />
+</PageLayout>

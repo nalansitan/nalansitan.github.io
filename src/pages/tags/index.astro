@@ -1,0 +1,37 @@
+---
+import { getAllPosts, getUniqueTagsWithCount } from "@/data/post";
+import { getLocaleFromUrl, localizePath, ui } from "@/i18n";
+import PageLayout from "@/layouts/Base.astro";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = ui[locale];
+const allPosts = await getAllPosts(locale);
+const allTags = getUniqueTagsWithCount(allPosts);
+
+const meta = {
+	description: t.tagsDescription,
+	title: t.allTags,
+};
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-6">{t.tags}</h1>
+	<ul class="space-y-4">
+		{
+			allTags.map(([tag, val]) => (
+				<li class="flex items-center gap-x-2">
+					<a
+						class="cactus-link inline-block"
+						href={localizePath(`/tags/${tag}/`, locale)}
+						title={locale === "en" ? `View posts tagged ${tag}` : `查看标签为 ${tag} 的文章`}
+					>
+						&#35;{tag}
+					</a>
+					<span class="inline-block">
+						- {locale === "en" ? `${val} post${val === 1 ? "" : "s"}` : `${val} 篇文章`}
+					</span>
+				</li>
+			))
+		}
+	</ul>
+</PageLayout>

@@ -1,0 +1,25 @@
+---
+import { getLocaleFromUrl, localeConfig, locales, switchLocalePath, ui } from "@/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+const { alternatePath } = Astro.props as { alternatePath?: string | undefined };
+---
+
+<nav aria-label={ui[locale].language} class="ms-2 flex items-center text-xs sm:ms-4">
+	{
+		locales.map((targetLocale) => (
+			<a
+				aria-current={targetLocale === locale ? "page" : false}
+				class:list={[
+					"rounded px-1.5 py-1 hover:text-link",
+					targetLocale === locale ? "text-accent-2 font-bold" : "text-muted",
+				]}
+				href={targetLocale !== locale && alternatePath ? alternatePath : switchLocalePath(Astro.url.pathname, targetLocale)}
+				hreflang={targetLocale}
+				lang={targetLocale}
+			>
+				{localeConfig[targetLocale].label}
+			</a>
+		))
+	}
+</nav>

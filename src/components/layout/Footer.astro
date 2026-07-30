@@ -1,0 +1,32 @@
+---
+import { getLocaleFromUrl, localizePath, ui } from "@/i18n";
+import { siteConfig } from "@/site.config";
+
+const year = new Date().getFullYear();
+const locale = getLocaleFromUrl(Astro.url);
+const t = ui[locale];
+const menuLinks = [
+	{ path: "/", title: t.home },
+	{ path: "/about/", title: t.about },
+	{ path: "/posts/", title: t.articles },
+	{ path: "/notes/", title: t.notes },
+].map((link) => ({ ...link, path: localizePath(link.path, locale) }));
+---
+
+<footer
+	class="text-muted mt-auto flex w-full flex-col items-center justify-center gap-y-2 pt-20 pb-4 text-center align-top font-semibold sm:flex-row sm:justify-between sm:text-xs"
+>
+	<div class="me-0 sm:me-4">
+		&copy; {siteConfig.author}
+		{year}.<span class="inline-block">&nbsp;🚀&nbsp;{siteConfig.title}&nbsp;🌵&nbsp;</span>
+	</div>
+	<nav aria-label={locale === "en" ? "Footer navigation" : "页脚导航"} class="sm:divide-muted flex gap-x-2 sm:gap-x-0 sm:divide-x">
+		{
+			menuLinks.map((link) => (
+				<a class="hover:text-global-text px-4 py-2 hover:underline sm:py-0" href={link.path}>
+					{link.title}
+				</a>
+			))
+		}
+	</nav>
+</footer>

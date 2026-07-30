@@ -1,87 +1,85 @@
 ---
-import { getCollection } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import Note from "@/components/note/Note.astro";
+import SocialList from "@/components/SocialList.astro";
+import { getAllNotes, getAllPosts } from "@/data/post";
+import { getLocaleFromUrl, localizePath, ui } from "@/i18n";
+import PageLayout from "@/layouts/Base.astro";
+import { collectionDateSort } from "@/utils/date";
 
-const posts = (await getCollection("posts", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// Posts
+const MAX_POSTS = 10;
+const locale = getLocaleFromUrl(Astro.url);
+const t = ui[locale];
+const allPosts = await getAllPosts(locale);
+const allPostsByDate = allPosts.sort(collectionDateSort) as CollectionEntry<"post">[];
+const latestPosts = allPostsByDate.slice(0, MAX_POSTS);
 
-const formatDate = (date: Date) =>
-  new Intl.DateTimeFormat("zh-CN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
+// Pinned Posts, set to a max of 3;
+const MAX_PINNED_POSTS = 3;
+const pinnedPosts = allPostsByDate
+	.values()
+	.filter((p) => p.data.pinned)
+	.take(MAX_PINNED_POSTS)
+	.toArray();
+
+// Notes, set to a max of 5
+const MAX_NOTES = 5;
+const allNotes = await getAllNotes(locale);
+const latestNotes = allNotes
+	.sort(collectionDateSort)
+	.slice(0, MAX_NOTES) as CollectionEntry<"note">[];
 ---
 
-<BaseLayout>
-  <section class="hero">
-    <p class="eyebrow">NALANSITAN’S NOTEBOOK</p>
-    <h1>保持好奇，<br /><em>持续构建。</em></h1>
-    <p class="intro">记录技术实践、阅读所得，以及那些值得反复思考的问题。</p>
-  </section>
-
-  <section class="posts" aria-labelledby="recent-posts">
-    <div class="section-title">
-      <h2 id="recent-posts">最新文章</h2>
-      <span>{posts.length.toString().padStart(2, "0")}</span>
-    </div>
-    {posts.map((post) => (
-      <article>
-        <div class="meta">
-          <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
-          <span>{post.data.tags.join(" · ")}</span>
-        </div>
-        <h3><a href={`/posts/${post.id}/`}>{post.data.title}</a></h3>
-        <p>{post.data.description}</p>
-        <a class="read-more" href={`/posts/${post.id}/`}>阅读全文 <span>→</span></a>
-      </article>
-    ))}
-  </section>
-</BaseLayout>
-
-<style>
-  .hero { padding: 40px 0 120px; }
-  .eyebrow {
-    color: var(--accent);
-    font-size: .76rem;
-    font-weight: 700;
-    letter-spacing: .18em;
-    margin-bottom: 24px;
-  }
-  h1 em { color: var(--accent); font-weight: inherit; }
-  .intro {
-    color: var(--muted);
-    font-family: Georgia, "Noto Serif SC", serif;
-    font-size: 1.2rem;
-    max-width: 520px;
-    margin-top: 32px;
-  }
-  .section-title {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--text);
-  }
-  .section-title h2 { margin: 0 0 12px; }
-  .section-title span { color: var(--muted); font-size: .8rem; }
-  article { padding: 40px 0; border-bottom: 1px solid var(--line); }
-  article h3 { font-size: clamp(1.7rem, 5vw, 2.35rem); margin: 12px 0; }
-  article h3 a:hover { color: var(--accent); }
-  article p { color: var(--muted); margin: 0 0 18px; }
-  .meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    color: var(--muted);
-    font-size: .76rem;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-  }
-  .read-more { color: var(--accent); font-size: .88rem; font-weight: 650; }
-  .read-more span { display: inline-block; transition: transform .2s ease; }
-  .read-more:hover span { transform: translateX(4px); }
-  @media (max-width: 600px) {
-    .hero { padding-bottom: 84px; }
-    .meta { flex-direction: column; gap: 2px; }
-  }
-</style>
+<PageLayout meta={{ title: t.home }}>
+	<section>
+		<h1 class="title mb-12">{t.greeting}</h1>
+		<p class="mb-4">{t.homeIntro}</p>
+		<SocialList />
+	</section>
+	{
+		pinnedPosts.length > 0 && (
+			<section class="mt-16">
+				<h2 class="title mb-6 text-xl">{t.pinnedPosts}</h2>
+				<ul class="space-y-4" role="list">
+					{pinnedPosts.map((p) => (
+						<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
+							<PostPreview post={p} />
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+	<section class="mt-16">
+		<h2 class="title text-accent mb-6 text-xl">
+			<a href={localizePath("/posts/", locale)}>{t.articles}</a>
+		</h2>
+		<ul class="space-y-4" role="list">
+			{
+				latestPosts.map((p) => (
+					<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
+						<PostPreview post={p} />
+					</li>
+				))
+			}
+		</ul>
+	</section>
+	{
+		latestNotes.length > 0 && (
+			<section class="mt-16">
+				<h2 class="title text-accent mb-6 text-xl">
+					<a href={localizePath("/notes/", locale)}>{t.notes}</a>
+				</h2>
+				<ul class="space-y-6" role="list">
+					{latestNotes.map((note) => (
+						<li>
+							<Note note={note} as="h3" isPreview />
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+</PageLayout>

@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { GetStaticPaths, Page } from "astro";
+import { Icon } from "astro-icon/components";
+import Note from "@/components/note/Note.astro";
+import Pagination from "@/components/Paginator.astro";
+import { getAllNotes } from "@/data/post";
+import { defaultLocale, getLocaleFromUrl, type Locale, localizePath, ui } from "@/i18n";
+import PageLayout from "@/layouts/Base.astro";
+import { collectionDateSort } from "@/utils/date";
+
+export const getNotePagePaths = async (
+	{ paginate }: Parameters<GetStaticPaths>[0],
+	locale: Locale,
+) => {
+	const MAX_NOTES_PER_PAGE = 10;
+	const allNotes = await getAllNotes(locale);
+	return paginate(allNotes.sort(collectionDateSort), { pageSize: MAX_NOTES_PER_PAGE });
+};
+
+export const getStaticPaths = ((context) =>
+	getNotePagePaths(context, defaultLocale)) satisfies GetStaticPaths;
+
+interface Props {
+	page: Page<CollectionEntry<"note">>;
+}
+
+const { page } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const t = ui[locale];
+
+const meta = {
+	description: t.notesDescription,
+	title: t.notes,
+};
+
+const paginationProps = {
+	...(page.url.prev && {
+		prevUrl: {
+			text: t.previous,
+			url: page.url.prev,
+		},
+	}),
+	...(page.url.next && {
+		nextUrl: {
+			text: t.next,
+			url: page.url.next,
+		},
+	}),
+};
+---
+
+<PageLayout meta={meta}>
+	<section>
+		<h1 class="title mb-12 flex items-center gap-3">
+			{t.notes} <a class="text-accent" href={localizePath("/notes/rss.xml", locale)} target="_blank">
+				<span class="sr-only">{t.rss}</span>
+				<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
+			</a>
+		</h1>
+		<ul class="mt-6 space-y-8 text-start">
+			{
+				page.data.map((note) => (
+					<li class="">
+						<Note note={note} as="h2" isPreview />
+					</li>
+				))
+			}
+		</ul>
+		<Pagination {...paginationProps} />
+	</section>
+</PageLayout>
