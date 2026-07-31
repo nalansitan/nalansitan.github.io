@@ -1,0 +1,56 @@
+---
+interface Props {
+	lang: "en" | "zh-CN";
+}
+
+const { lang } = Astro.props;
+---
+
+<section
+	aria-label={lang === "en" ? "Comments" : "评论"}
+	class="giscus-comments mt-16 border-t border-zinc-200 pt-10 dark:border-zinc-700"
+	data-category="Announcements"
+	data-category-id="DIC_kwDOTn8lKs4DCWud"
+	data-lang={lang}
+	data-repo="nalansitan/nalansitan.github.io"
+	data-repo-id="R_kgDOTn8lKg"
+>
+	<script is:inline>
+		const container = document.currentScript.parentElement;
+		const theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+		const giscus = document.createElement("script");
+
+		giscus.src = "https://giscus.app/client.js";
+		giscus.className = "giscus";
+		giscus.async = true;
+		giscus.crossOrigin = "anonymous";
+		giscus.dataset.repo = container.dataset.repo;
+		giscus.dataset.repoId = container.dataset.repoId;
+		giscus.dataset.category = container.dataset.category;
+		giscus.dataset.categoryId = container.dataset.categoryId;
+		giscus.dataset.mapping = "pathname";
+		giscus.dataset.strict = "1";
+		giscus.dataset.reactionsEnabled = "1";
+		giscus.dataset.emitMetadata = "0";
+		giscus.dataset.inputPosition = "top";
+		giscus.dataset.theme = theme;
+		giscus.dataset.lang = container.dataset.lang;
+		giscus.dataset.loading = "lazy";
+		container.append(giscus);
+
+		document.addEventListener("theme-change", (event) => {
+			giscus.dataset.theme = event.detail.theme;
+			const iframe = container.querySelector("iframe.giscus-frame");
+			iframe?.contentWindow?.postMessage(
+				{
+					giscus: {
+						setConfig: {
+							theme: event.detail.theme,
+						},
+					},
+				},
+				"https://giscus.app",
+			);
+		});
+	</script>
+</section>

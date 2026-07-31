@@ -64,10 +64,20 @@ const article = await readFile("dist/posts/hello-world/index.html", "utf8");
 assert.match(article, /我的第一篇文章/);
 assert.match(article, /目录/);
 assert.match(article, /href="\/en\/posts\/hello-world\/"/);
+assert.match(article, /class="giscus-comments/);
+assert.match(article, /className = "giscus"/);
+assert.match(article, /data-repo="nalansitan\/nalansitan\.github\.io"/);
+assert.match(article, /data-repo-id="R_kgDOTn8lKg"/);
+assert.match(article, /data-category-id="DIC_kwDOTn8lKs4DCWud"/);
+assert.match(article, /dataset\.mapping = "pathname"/);
+assert.match(article, /data-lang="zh-CN"/);
+assert.match(article, /theme-change/);
+assert.match(article, /giscus\.dataset\.theme = event\.detail\.theme/);
 
 const posts = await readFile("dist/posts/index.html", "utf8");
 assert.match(posts, /搜索/);
 assert.match(posts, /标签/);
+assert.doesNotMatch(posts, /class="giscus-comments/);
 
 const notes = await readFile("dist/notes/index.html", "utf8");
 assert.doesNotMatch(notes, /data-pagefind-body/);
@@ -91,6 +101,8 @@ const englishArticle = await readFile("dist/en/posts/hello-world/index.html", "u
 assert.match(englishArticle, /My First Post/);
 assert.match(englishArticle, /Table of contents/);
 assert.match(englishArticle, /href="\/posts\/hello-world\/"/);
+assert.match(englishArticle, /class="giscus-comments/);
+assert.match(englishArticle, /data-lang="en"/);
 
 const chineseBlogTag = await readFile("dist/tags/博客/index.html", "utf8");
 assert.match(chineseBlogTag, /href="\/en\/tags\/blog\/"/);
