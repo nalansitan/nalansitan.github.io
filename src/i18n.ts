@@ -67,7 +67,7 @@ export const ui = {
 		feedbackSuggestions: "Feedback & suggestions",
 		draft: " (Draft)",
 		findMe: "Find me online",
-		greeting: "Hi, I’m 纳兰斯坦、爱因容若.",
+		greeting: "Hi, I’m Nalansitan（纳兰斯坦）.",
 		home: "Home",
 		homeIntro: "I write about building software, reading, and ideas worth revisiting.",
 		homeMottoLines: [

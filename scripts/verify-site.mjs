@@ -223,7 +223,7 @@ assert.match(about, /网站使用 Astro Cactus、Markdown 和 pnpm 构建/);
 
 const englishHome = await readFile("dist/en/index.html", "utf8");
 assert.match(englishHome, /lang="en"/);
-assert.match(englishHome, /Hi, I’m 纳兰斯坦、爱因容若/);
+assert.match(englishHome, /Hi, I’m Nalansitan（纳兰斯坦）/);
 assert.match(englishHome, /<span class="block">Stay curious, keep building.<\/span>/);
 assert.match(englishHome, /<span class="block">Think deeply, discern the subtle.<\/span>/);
 assert.match(
@@ -232,7 +232,7 @@ assert.match(
 );
 assert.match(
 	englishHome,
-	/Hi, I’m 纳兰斯坦、爱因容若[\s\S]*href="\/en\/about\/"[\s\S]*>About Me<\/a>[\s\S]*Stay curious/,
+	/Hi, I’m Nalansitan[\s\S]*href="\/en\/about\/"[\s\S]*>About Me<\/a>[\s\S]*Stay curious/,
 );
 assert.match(englishHome, /Nalansitan’s personal blog/);
 assert.match(
