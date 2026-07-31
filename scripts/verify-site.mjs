@@ -14,6 +14,8 @@ const workflow = await readFile(".github/workflows/deploy.yml", "utf8");
 assert.match(workflow, /actions\/checkout@v6/);
 assert.match(workflow, /pnpm\/action-setup@v6/);
 assert.match(workflow, /actions\/setup-node@v6/);
+assert.match(workflow, /actions\/upload-pages-artifact@v5/);
+assert.match(workflow, /actions\/deploy-pages@v5/);
 assert.match(workflow, /run: pnpm install --frozen-lockfile/);
 assert.match(workflow, /run: pnpm test/);
 
@@ -79,6 +81,10 @@ assert.match(home, /文章/);
 assert.match(home, /随笔/);
 assert.match(home, /保持好奇/);
 assert.match(home, /<em>持续构建。<\/em>/);
+assert.match(
+	home,
+	/你好，我是纳兰斯坦、爱因容若。[\s\S]*href="\/about\/"[\s\S]*>关于我<\/a>[\s\S]*保持好奇/,
+);
 assert.match(home, /<p class="mb-4">记录技术实践、阅读所得，以及那些值得反复思考的问题。<\/p>/);
 assert.doesNotMatch(home, /<p class="mb-4">纳兰斯坦（Nalansitan）/);
 assert.match(home, /href="https:\/\/github\.com\/nalansitan\/nalansitan\.github\.io\/issues\/new"/);
@@ -171,6 +177,10 @@ assert.match(about, /网站使用 Astro Cactus、Markdown 和 pnpm 构建/);
 const englishHome = await readFile("dist/en/index.html", "utf8");
 assert.match(englishHome, /lang="en"/);
 assert.match(englishHome, /Hi, I’m 纳兰斯坦、爱因容若/);
+assert.match(
+	englishHome,
+	/Hi, I’m 纳兰斯坦、爱因容若[\s\S]*href="\/en\/about\/"[\s\S]*>About Me<\/a>[\s\S]*Stay curious/,
+);
 assert.match(englishHome, /Nalansitan’s personal blog/);
 assert.match(
 	englishHome,

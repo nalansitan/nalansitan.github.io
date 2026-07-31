@@ -36,7 +36,10 @@ const latestNotes = allNotes
 <PageLayout meta={{ title: t.home }}>
 	<section class="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_13rem] md:gap-12">
 		<div>
-			<h1 class="title mb-12">{t.greeting}</h1>
+			<h1 class="title mb-4">{t.greeting}</h1>
+			<p class="mb-8">
+				<a class="cactus-link font-semibold" href={localizePath("/about/", locale)}>{t.about}</a>
+			</p>
 			<p class="text-accent-2 mb-3 text-xl font-semibold">
 				{t.homeMotto}<em>{t.homeMottoEmphasis}</em>
 			</p>
