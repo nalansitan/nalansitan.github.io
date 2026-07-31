@@ -54,6 +54,24 @@ for (const file of requiredFiles) {
 	await readFile(file);
 }
 
+const baiduAnalyticsUrl = "https://hm.baidu.com/hm.js?fa757ee7b46c11522b30202a0f696ba4";
+const builtHtmlFiles = (await readdir("dist", { recursive: true })).filter((file) =>
+	file.endsWith(".html"),
+);
+assert.ok(builtHtmlFiles.length > 0);
+for (const file of builtHtmlFiles) {
+	const html = await readFile(`dist/${file}`, "utf8");
+	assert.equal(
+		html.split(baiduAnalyticsUrl).length - 1,
+		1,
+		`${file} must load Baidu Analytics once`,
+	);
+	assert.ok(
+		html.indexOf(baiduAnalyticsUrl) < html.indexOf("</head>"),
+		`${file} must load Baidu Analytics inside <head>`,
+	);
+}
+
 const builtStylesheets = (await readdir("dist/_astro"))
 	.filter((file) => file.endsWith(".css"))
 	.map((file) => readFile(`dist/_astro/${file}`, "utf8"));
