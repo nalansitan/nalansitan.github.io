@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import Avatar from "@/components/Avatar.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import Note from "@/components/note/Note.astro";
 import SocialList from "@/components/SocialList.astro";
@@ -33,13 +34,16 @@ const latestNotes = allNotes
 ---
 
 <PageLayout meta={{ title: t.home }}>
-	<section>
-		<h1 class="title mb-12">{t.greeting}</h1>
-		<p class="text-accent-2 mb-3 text-xl font-semibold">
-			{t.homeMotto}<em>{t.homeMottoEmphasis}</em>
-		</p>
-		<p class="mb-4">{t.homeIntro}</p>
-		<SocialList />
+	<section class="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_13rem] md:gap-12">
+		<div>
+			<h1 class="title mb-12">{t.greeting}</h1>
+			<p class="text-accent-2 mb-3 text-xl font-semibold">
+				{t.homeMotto}<em>{t.homeMottoEmphasis}</em>
+			</p>
+			<p class="mb-4">{t.homeIntro}</p>
+			<SocialList />
+		</div>
+		<Avatar />
 	</section>
 	{
 		pinnedPosts.length > 0 && (

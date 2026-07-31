@@ -1,0 +1,17 @@
+---
+import { getLocaleFromUrl } from "@/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+---
+
+<figure class="order-first w-full max-w-52 justify-self-center md:order-last md:max-w-none">
+	<img
+		alt={locale === "en" ? "Portrait of 纳兰斯坦、爱因容若" : "纳兰斯坦、爱因容若的头像"}
+		class="aspect-square w-full rounded-2xl object-cover ring-1 ring-black/10 dark:ring-white/15"
+		decoding="async"
+		fetchpriority="high"
+		height="512"
+		src="/images/avatar.jpg"
+		width="512"
+	/>
+</figure>

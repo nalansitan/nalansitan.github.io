@@ -5,7 +5,6 @@ import Header from "@/components/layout/Header.astro";
 import SkipLink from "@/components/SkipLink.astro";
 import ThemeProvider from "@/components/ThemeProvider.astro";
 import { getLocaleFromUrl, ui } from "@/i18n";
-import { siteConfig } from "@/site.config";
 import type { SiteMeta } from "@/types";
 
 interface Props {
@@ -16,7 +15,7 @@ const {
 	meta: { alternatePath, articleDate, description, ogImage, title },
 } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
-const pageDescription = description ?? (locale === "en" ? ui.en.homeIntro : siteConfig.description);
+const pageDescription = description ?? ui[locale].seoDescription;
 ---
 
 <html class="scroll-smooth" lang={locale}>
@@ -25,7 +24,7 @@ const pageDescription = description ?? (locale === "en" ? ui.en.homeIntro : site
 		<ThemeProvider />
 	</head>
 	<body
-		class="bg-global-bg text-global-text mx-auto flex min-h-screen max-w-3xl flex-col px-4 pt-16 font-sans text-sm font-normal antialiased sm:px-8"
+		class="bg-global-bg text-global-text mx-auto flex min-h-screen max-w-3xl flex-col px-4 pt-16 font-sans text-[15px] font-normal antialiased sm:px-8"
 	>
 		<SkipLink />
 		<Header alternatePath={alternatePath} />

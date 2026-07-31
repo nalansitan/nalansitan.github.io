@@ -3,21 +3,36 @@ import type { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
 	url: "https://blog.nalansitan.com/",
+	alternateName: "Nalansitan Blog",
 	/*
 		- Used to construct the meta title property found in src/components/BaseHead.astro L:11
 		- The webmanifest name found in astro.config.ts L:42
 		- The link value found in src/components/layout/Header.astro L:35
 		- In the footer found in src/components/layout/Footer.astro L:12
 	*/
-	title: "Nalansitan",
+	title: "纳兰斯坦、爱因容若的未晚斋",
 	// Used as both a meta property (src/components/BaseHead.astro L:31 + L:49) & the generated satori png (src/pages/og-image/[slug].png.ts)
-	author: "Nalansitan",
+	author: "纳兰斯坦、爱因容若",
 	// Used as the default description meta property and webmanifest description
-	description: "记录技术实践、阅读所得，以及那些值得反复思考的问题。",
+	description:
+		"纳兰斯坦（Nalansitan）与爱因容若的个人博客，记录技术实践、阅读所得，以及那些值得反复思考的问题。",
 	// HTML lang property, found in src/layouts/Base.astro L:18 & astro.config.ts L:48
 	lang: "zh-CN",
+	keywords: [
+		"博客",
+		"纳兰斯坦",
+		"Nalansitan",
+		"爱因容若",
+		"未晚斋",
+		"技术",
+		"互联网",
+		"成长",
+		"阅读",
+		"随笔",
+	],
 	// Meta property, found in src/components/BaseHead.astro L:42
 	ogLocale: "zh_CN",
+	repositoryUrl: "https://github.com/nalansitan/nalansitan.github.io",
 	showLogo: true,
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	date: {

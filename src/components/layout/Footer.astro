@@ -20,7 +20,10 @@ const menuLinks = [
 		&copy; {siteConfig.author}
 		{year}.<span class="inline-block">&nbsp;🚀&nbsp;{siteConfig.title}&nbsp;🌵&nbsp;</span>
 	</div>
-	<nav aria-label={locale === "en" ? "Footer navigation" : "页脚导航"} class="sm:divide-muted flex gap-x-2 sm:gap-x-0 sm:divide-x">
+	<nav
+		aria-label={locale === "en" ? "Footer navigation" : "页脚导航"}
+		class="sm:divide-muted flex flex-wrap justify-center gap-x-2 sm:gap-x-0 sm:divide-x"
+	>
 		{
 			menuLinks.map((link) => (
 				<a class="hover:text-global-text px-4 py-2 hover:underline sm:py-0" href={link.path}>
@@ -28,5 +31,13 @@ const menuLinks = [
 				</a>
 			))
 		}
+		<a
+			class="hover:text-global-text px-4 py-2 hover:underline sm:py-0"
+			href={siteConfig.repositoryUrl}
+			rel="noreferrer"
+			target="_blank"
+		>
+			GitHub
+		</a>
 	</nav>
 </footer>

@@ -1,7 +1,9 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
 import type { HTMLTag, Polymorphic } from "astro/types";
+import Giscus from "@/components/blog/Giscus.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
+import ShareLink from "@/components/ShareLink.astro";
 import { getLocaleFromUrl, localizePath } from "@/i18n";
 
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
@@ -45,4 +47,12 @@ const { Content } = await render(note);
 	>
 		<Content />
 	</div>
+	{
+		!isPreview && (
+			<>
+				<ShareLink />
+				<Giscus lang={locale} />
+			</>
+		)
+	}
 </article>

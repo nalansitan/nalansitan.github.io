@@ -19,6 +19,8 @@ const locale = getLocaleFromUrl(Astro.url);
 
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
+const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "/en/";
+const socialTitle = isHomePage ? siteTitle : title;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url).href;
 const alternateLinks = locales.map((alternateLocale) => ({
@@ -34,6 +36,15 @@ const defaultLanguagePath =
 	locale === "en" && alternatePath
 		? alternatePath
 		: localizePath(Astro.url.pathname.replace(/^\/en(?=\/|$)/, "") || "/", "zh-CN");
+const websiteStructuredData = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	alternateName: siteConfig.alternateName,
+	description: siteConfig.description,
+	inLanguage: locales,
+	name: siteConfig.title,
+	url: siteConfig.url,
+};
 ---
 
 <meta charset="utf-8" />
@@ -67,10 +78,12 @@ const defaultLanguagePath =
 <meta content={siteTitle} name="title" />
 <meta content={description} name="description" />
 <meta content={siteConfig.author} name="author" />
+<meta content={siteConfig.keywords.join(", ")} name="keywords" />
+<script is:inline set:html={JSON.stringify(websiteStructuredData)} type="application/ld+json"></script>
 
 {/* Open Graph / Facebook */}
 <meta content={articleDate ? "article" : "website"} property="og:type" />
-<meta content={title} property="og:title" />
+<meta content={socialTitle} property="og:title" />
 <meta content={description} property="og:description" />
 <meta content={canonicalURL} property="og:url" />
 <meta content={siteConfig.title} property="og:site_name" />
@@ -90,7 +103,7 @@ const defaultLanguagePath =
 {/* Twitter */}
 <meta content="summary_large_image" property="twitter:card" />
 <meta content={canonicalURL} property="twitter:url" />
-<meta content={title} property="twitter:title" />
+<meta content={socialTitle} property="twitter:title" />
 <meta content={description} property="twitter:description" />
 <meta content={socialImageURL} property="twitter:image" />
 

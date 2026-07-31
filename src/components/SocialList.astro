@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { getLocaleFromUrl, ui } from "@/i18n";
+import { siteConfig } from "@/site.config";
 
 /** 
 	Uses https://www.astroicon.dev/getting-started/
@@ -41,4 +42,12 @@ const locale = getLocaleFromUrl(Astro.url);
 			))
 		}
 	</ul>
+	<a
+		class="cactus-link basis-full sm:basis-auto"
+		href={`${siteConfig.repositoryUrl}/issues/new`}
+		rel="noreferrer"
+		target="_blank"
+	>
+		{ui[locale].feedbackSuggestions}
+	</a>
 </div>

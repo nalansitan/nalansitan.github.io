@@ -1,4 +1,4 @@
-# Nalansitan Blog
+# 纳兰斯坦、爱因容若的未晚斋
 
 基于 [Astro](https://astro.build/) 与
 [Astro Cactus](https://github.com/chrismwilliams/astro-theme-cactus) 的个人博客，使用

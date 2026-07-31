@@ -15,13 +15,13 @@ const { lang } = Astro.props;
 	data-repo="nalansitan/nalansitan.github.io"
 	data-repo-id="R_kgDOTn8lKg"
 >
+	<h2 class="title mb-6 text-xl">{lang === "en" ? "Comments" : "评论"}</h2>
 	<script is:inline>
 		const container = document.currentScript.parentElement;
 		const theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 		const giscus = document.createElement("script");
 
 		giscus.src = "https://giscus.app/client.js";
-		giscus.className = "giscus";
 		giscus.async = true;
 		giscus.crossOrigin = "anonymous";
 		giscus.dataset.repo = container.dataset.repo;
@@ -35,7 +35,6 @@ const { lang } = Astro.props;
 		giscus.dataset.inputPosition = "top";
 		giscus.dataset.theme = theme;
 		giscus.dataset.lang = container.dataset.lang;
-		giscus.dataset.loading = "lazy";
 		container.append(giscus);
 
 		document.addEventListener("theme-change", (event) => {

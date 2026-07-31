@@ -1,11 +1,14 @@
 export interface SiteConfig {
+	alternateName: string;
 	author: string;
 	date: {
 		options: Intl.DateTimeFormatOptions;
 	};
 	description: string;
 	lang: string;
+	keywords: string[];
 	ogLocale: string;
+	repositoryUrl: string;
 	showLogo: boolean;
 	title: string;
 	url: string;

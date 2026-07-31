@@ -1,0 +1,82 @@
+---
+import { getLocaleFromUrl, ui } from "@/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = ui[locale];
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<share-link
+	class="share-link mt-10 block border-t border-zinc-200 pt-6 dark:border-zinc-700"
+	data-copied={t.linkCopied}
+	data-copy-fallback={t.copyFallback}
+>
+	<button
+		aria-controls="share-panel"
+		aria-expanded="false"
+		class="cactus-link cursor-pointer font-semibold"
+		type="button"
+	>
+		{t.share}
+	</button>
+	<div class="mt-4 hidden gap-2 sm:grid-cols-[minmax(0,1fr)_auto]" id="share-panel">
+		<label class="sr-only" for="share-url">{t.pageLink}</label>
+		<input
+			class="border-muted bg-global-bg min-w-0 rounded border px-3 py-2 text-sm"
+			id="share-url"
+			readonly
+			type="url"
+			value={canonicalUrl}
+		/>
+		<button
+			class="bg-accent text-global-bg hover:bg-link cursor-pointer rounded px-4 py-2 font-semibold"
+			type="button"
+		>
+			{t.copyLink}
+		</button>
+	</div>
+	<p aria-live="polite" class="text-muted mt-2 min-h-5 text-xs"></p>
+</share-link>
+
+<script>
+	class ShareLink extends HTMLElement {
+		constructor() {
+			super();
+			const toggle = this.querySelector<HTMLButtonElement>(":scope > button");
+			const panel = this.querySelector<HTMLDivElement>("#share-panel");
+			const input = this.querySelector<HTMLInputElement>("#share-url");
+			const copy = panel?.querySelector<HTMLButtonElement>("button");
+			const status = this.querySelector<HTMLParagraphElement>("[aria-live]");
+
+			toggle?.addEventListener("click", () => {
+				const willOpen = panel?.classList.contains("hidden") ?? false;
+				panel?.classList.toggle("hidden", !willOpen);
+				panel?.classList.toggle("grid", willOpen);
+				toggle.setAttribute("aria-expanded", String(willOpen));
+				if (willOpen) input?.focus();
+			});
+
+			copy?.addEventListener("click", async () => {
+				if (!input || !status) return;
+
+				try {
+					await navigator.clipboard.writeText(input.value);
+					status.textContent = this.dataset.copied ?? "";
+				} catch {
+					input.select();
+					status.textContent = this.dataset.copyFallback ?? "";
+				}
+			});
+
+			this.addEventListener("keydown", (event) => {
+				if (event.key !== "Escape" || panel?.classList.contains("hidden")) return;
+				panel?.classList.add("hidden");
+				panel?.classList.remove("grid");
+				toggle?.setAttribute("aria-expanded", "false");
+				toggle?.focus();
+			});
+		}
+	}
+
+	customElements.define("share-link", ShareLink);
+</script>
