@@ -81,6 +81,7 @@ export default {
 				},
 				sm: {
 					css: {
+						fontSize: "0.9375rem",
 						code: {
 							fontSize: "var(--text-sm)",
 							fontWeight: "400",

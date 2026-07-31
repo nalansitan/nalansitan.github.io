@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { access, readdir, readFile } from "node:fs/promises";
 
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 assert.match(packageJson.packageManager, /^pnpm@/);
@@ -10,11 +10,10 @@ await assert.rejects(access("package-lock.json"));
 const baseLayoutSource = await readFile("src/layouts/Base.astro", "utf8");
 assert.match(baseLayoutSource, /font-sans text-\[15px\] font-normal/);
 
-const tailwindConfigSource = await readFile("tailwind.config.ts", "utf8");
-assert.match(tailwindConfigSource, /sm:\s*\{\s*css:\s*\{\s*fontSize:\s*"0\.9375rem"/);
-
 const workflow = await readFile(".github/workflows/deploy.yml", "utf8");
-assert.match(workflow, /pnpm\/action-setup/);
+assert.match(workflow, /actions\/checkout@v6/);
+assert.match(workflow, /pnpm\/action-setup@v6/);
+assert.match(workflow, /actions\/setup-node@v6/);
 assert.match(workflow, /run: pnpm install --frozen-lockfile/);
 assert.match(workflow, /run: pnpm test/);
 
@@ -52,6 +51,12 @@ const requiredFiles = [
 for (const file of requiredFiles) {
 	await readFile(file);
 }
+
+const builtStylesheets = (await readdir("dist/_astro"))
+	.filter((file) => file.endsWith(".css"))
+	.map((file) => readFile(`dist/_astro/${file}`, "utf8"));
+const builtCss = (await Promise.all(builtStylesheets)).join("\n");
+assert.match(builtCss, /\.prose-sm\{font-size:\.9375rem/);
 
 const home = await readFile("dist/index.html", "utf8");
 assert.match(home, /纳兰斯坦、爱因容若/);
