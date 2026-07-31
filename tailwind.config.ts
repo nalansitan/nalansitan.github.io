@@ -92,13 +92,16 @@ export default {
 					css: {
 						fontSize: "1.0625rem",
 						lineHeight: "1.8",
-						"@media (min-width: 640px)": {
-							fontSize: "1.125rem",
-						},
 						code: {
 							fontSize: "0.875rem",
 							fontWeight: "400",
 						},
+					},
+				},
+				"reading-lg": {
+					css: {
+						fontSize: "1.125rem",
+						lineHeight: "1.8",
 					},
 				},
 			}),

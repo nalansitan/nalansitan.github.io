@@ -19,6 +19,11 @@ const readingSurfaces = [
 for (const file of readingSurfaces) {
 	const source = await readFile(file, "utf8");
 	assert.match(source, /\bprose-reading\b/, `${file} must use the responsive reading scale`);
+	assert.match(
+		source,
+		/\bsm:prose-reading-lg\b/,
+		`${file} must enlarge the reading scale on wider screens`,
+	);
 	assert.doesNotMatch(source, /\bprose-sm\b/, `${file} must not use the small prose scale`);
 }
 
@@ -89,10 +94,7 @@ const builtStylesheets = (await readdir("dist/_astro"))
 	.map((file) => readFile(`dist/_astro/${file}`, "utf8"));
 const builtCss = (await Promise.all(builtStylesheets)).join("\n");
 assert.match(builtCss, /\.prose-reading\{font-size:1\.0625rem;line-height:1\.8/);
-assert.match(
-	builtCss,
-	/@media \(min-width:40rem\)\{\.prose-reading\{font-size:1\.125rem/,
-);
+assert.match(builtCss, /\.sm\\:prose-reading-lg\{font-size:1\.125rem;line-height:1\.8/);
 
 const home = await readFile("dist/index.html", "utf8");
 assert.match(home, /纳兰斯坦、爱因容若/);
@@ -121,7 +123,7 @@ assert.match(
 	/你好，我是纳兰斯坦、爱因容若。[\s\S]*href="\/about\/"[\s\S]*>关于我<\/a>[\s\S]*保持好奇/,
 );
 assert.match(home, /<p class="mb-4">记录技术实践、阅读所得，以及那些值得反复思考的问题。<\/p>/);
-assert.match(home, />在这里关注我<\/h2>/);
+assert.match(home, /<p>在这里关注我<\/p>/);
 assert.doesNotMatch(home, /在这里找到我/);
 assert.doesNotMatch(home, /<p class="mb-4">纳兰斯坦（Nalansitan）/);
 assert.match(home, /href="https:\/\/github\.com\/nalansitan\/nalansitan\.github\.io\/issues\/new"/);
