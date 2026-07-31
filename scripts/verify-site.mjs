@@ -8,7 +8,19 @@ await access("pnpm-lock.yaml");
 await assert.rejects(access("package-lock.json"));
 
 const baseLayoutSource = await readFile("src/layouts/Base.astro", "utf8");
-assert.match(baseLayoutSource, /font-sans text-\[15px\] font-normal/);
+assert.match(baseLayoutSource, /font-sans text-base font-normal/);
+
+const readingSurfaces = [
+	"src/layouts/BlogPost.astro",
+	"src/pages/about.astro",
+	"src/pages/tags/[tag]/[...page].astro",
+	"src/components/note/Note.astro",
+];
+for (const file of readingSurfaces) {
+	const source = await readFile(file, "utf8");
+	assert.match(source, /\bprose-reading\b/, `${file} must use the responsive reading scale`);
+	assert.doesNotMatch(source, /\bprose-sm\b/, `${file} must not use the small prose scale`);
+}
 
 const workflow = await readFile(".github/workflows/deploy.yml", "utf8");
 assert.match(workflow, /actions\/checkout@v6/);
@@ -76,7 +88,11 @@ const builtStylesheets = (await readdir("dist/_astro"))
 	.filter((file) => file.endsWith(".css"))
 	.map((file) => readFile(`dist/_astro/${file}`, "utf8"));
 const builtCss = (await Promise.all(builtStylesheets)).join("\n");
-assert.match(builtCss, /\.prose-sm\{font-size:\.9375rem/);
+assert.match(builtCss, /\.prose-reading\{font-size:1\.0625rem;line-height:1\.8/);
+assert.match(
+	builtCss,
+	/@media \(min-width:40rem\)\{\.prose-reading\{font-size:1\.125rem/,
+);
 
 const home = await readFile("dist/index.html", "utf8");
 assert.match(home, /纳兰斯坦、爱因容若/);
@@ -105,6 +121,8 @@ assert.match(
 	/你好，我是纳兰斯坦、爱因容若。[\s\S]*href="\/about\/"[\s\S]*>关于我<\/a>[\s\S]*保持好奇/,
 );
 assert.match(home, /<p class="mb-4">记录技术实践、阅读所得，以及那些值得反复思考的问题。<\/p>/);
+assert.match(home, />在这里关注我<\/h2>/);
+assert.doesNotMatch(home, /在这里找到我/);
 assert.doesNotMatch(home, /<p class="mb-4">纳兰斯坦（Nalansitan）/);
 assert.match(home, /href="https:\/\/github\.com\/nalansitan\/nalansitan\.github\.io\/issues\/new"/);
 assert.match(home, />反馈与建议<\/a>/);
@@ -278,7 +296,8 @@ assert.match(englishAbout, /Science and art are two sides of the same whole/);
 assert.match(englishAbout, /History tells us where we came from/);
 assert.match(englishAbout, /Life may not have a single answer/);
 assert.match(englishAbout, /The journey has its course, but exploration knows no bounds/);
-assert.match(englishAbout, /Hi, I’m 纳兰斯坦、爱因容若/);
+assert.match(englishAbout, /Hi, I’m Nalansitan（纳兰斯坦）\./);
+assert.doesNotMatch(englishAbout, /Hi, I’m 纳兰斯坦、爱因容若\./);
 assert.match(englishAbout, /This is my personal blog for software engineering/);
 assert.match(englishAbout, /Good writing is more than publishing conclusions/);
 assert.match(englishAbout, /The site uses Astro Cactus, Markdown, and pnpm/);

@@ -28,7 +28,7 @@ export const ui = {
 		copyLink: "复制链接",
 		feedbackSuggestions: "反馈与建议",
 		draft: "（草稿）",
-		findMe: "在这里找到我",
+		findMe: "在这里关注我",
 		greeting: "你好，我是纳兰斯坦、爱因容若。",
 		home: "首页",
 		homeIntro: "记录技术实践、阅读所得，以及那些值得反复思考的问题。",

@@ -82,7 +82,7 @@ const paginationProps = {
 	<h1 class="title capitalize">
 		{tagMeta?.data.title ?? (locale === "en" ? `Posts about ${tag}` : `关于 ${tag} 的文章`)}
 	</h1>
-	<div class="prose prose-sm prose-cactus mb-16 max-w-none">
+	<div class="prose prose-reading prose-cactus mb-16 max-w-none">
 		{tagMeta?.data.description && <p>{tagMeta.data.description}</p>}
 		{TagContent && <TagContent />}
 	</div>
