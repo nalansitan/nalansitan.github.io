@@ -40,8 +40,8 @@ const latestNotes = allNotes
 			<p class="mb-8">
 				<a class="cactus-link font-semibold" href={localizePath("/about/", locale)}>{t.about}</a>
 			</p>
-			<p class="text-accent-2 mb-3 text-xl font-semibold">
-				{t.homeMotto}<em>{t.homeMottoEmphasis}</em>
+			<p class="text-accent-2 mb-3 space-y-1 text-xl font-semibold">
+				{t.homeMottoLines.map((line) => <span class="block">{line}</span>)}
 			</p>
 			<p class="mb-4">{t.homeIntro}</p>
 			<SocialList />

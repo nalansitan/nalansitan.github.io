@@ -97,8 +97,9 @@ assert.match(home, /content="纳兰斯坦、爱因容若的未晚斋" property="
 assert.match(home, /Hello, World/);
 assert.match(home, /文章/);
 assert.match(home, /随笔/);
-assert.match(home, /保持好奇/);
-assert.match(home, /<em>持续构建。<\/em>/);
+assert.match(home, /<span class="block">保持好奇，持续构建。<\/span>/);
+assert.match(home, /<span class="block">深入思考，洞见幽微。<\/span>/);
+assert.match(home, /<span class="block">以文载思，向新而行。<\/span>/);
 assert.match(
 	home,
 	/你好，我是纳兰斯坦、爱因容若。[\s\S]*href="\/about\/"[\s\S]*>关于我<\/a>[\s\S]*保持好奇/,
@@ -203,6 +204,12 @@ assert.match(about, /网站使用 Astro Cactus、Markdown 和 pnpm 构建/);
 const englishHome = await readFile("dist/en/index.html", "utf8");
 assert.match(englishHome, /lang="en"/);
 assert.match(englishHome, /Hi, I’m 纳兰斯坦、爱因容若/);
+assert.match(englishHome, /<span class="block">Stay curious, keep building.<\/span>/);
+assert.match(englishHome, /<span class="block">Think deeply, discern the subtle.<\/span>/);
+assert.match(
+	englishHome,
+	/<span class="block">Carry thought through writing; move toward what’s new.<\/span>/,
+);
 assert.match(
 	englishHome,
 	/Hi, I’m 纳兰斯坦、爱因容若[\s\S]*href="\/en\/about\/"[\s\S]*>About Me<\/a>[\s\S]*Stay curious/,
