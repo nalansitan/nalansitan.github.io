@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">情境领导力四象限</title>
+  <desc id="desc">按照指令行为和支持行为的高低，展示指令式、教练式、支持式和授权式四种领导方式。</desc>
+  <rect width="1200" height="760" rx="32" fill="#f8fafc"/>
+  <text x="600" y="62" text-anchor="middle" font-family="system-ui, sans-serif" font-size="34" font-weight="700" fill="#172033">情境领导力：根据任务状态调整支持方式</text>
+  <text x="600" y="98" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" fill="#596579">判断对象是“这个人面对这项任务的状态”，不是给人贴标签</text>
+  <g transform="translate(170 138)" font-family="system-ui, sans-serif">
+    <rect width="430" height="245" rx="20" fill="#e8f1ff" stroke="#7aa8f7" stroke-width="2"/>
+    <text x="28" y="46" font-size="27" font-weight="700" fill="#2457a6">教练式（Coaching）</text>
+    <text x="28" y="82" font-size="18" fill="#34445e">能力较低 · 意愿下降</text>
+    <text x="28" y="125" font-size="20" fill="#172033">讲清方法，持续反馈</text>
+    <text x="28" y="158" font-size="20" fill="#172033">既给方向，也给鼓励</text>
+    <rect x="260" y="187" width="142" height="36" rx="18" fill="#cddfff"/>
+    <text x="331" y="211" text-anchor="middle" font-size="16" font-weight="650" fill="#2457a6">高指令 · 高支持</text>
+
+    <rect x="450" width="430" height="245" rx="20" fill="#e8f8f1" stroke="#63bf91" stroke-width="2"/>
+    <text x="478" y="46" font-size="27" font-weight="700" fill="#18714a">支持式（Supporting）</text>
+    <text x="478" y="82" font-size="18" fill="#34445e">能力较高 · 意愿波动</text>
+    <text x="478" y="125" font-size="20" fill="#172033">少给答案，多听判断</text>
+    <text x="478" y="158" font-size="20" fill="#172033">帮助建立信心与自主性</text>
+    <rect x="710" y="187" width="142" height="36" rx="18" fill="#ccebdd"/>
+    <text x="781" y="211" text-anchor="middle" font-size="16" font-weight="650" fill="#18714a">低指令 · 高支持</text>
+
+    <rect y="265" width="430" height="245" rx="20" fill="#fff1e5" stroke="#ee9a4c" stroke-width="2"/>
+    <text x="28" y="311" font-size="27" font-weight="700" fill="#9b4d0c">指令式（Directing）</text>
+    <text x="28" y="347" font-size="18" fill="#34445e">能力较低 · 意愿很强</text>
+    <text x="28" y="390" font-size="20" fill="#172033">明确目标、边界和步骤</text>
+    <text x="28" y="423" font-size="20" fill="#172033">先建立完成任务的方法</text>
+    <rect x="260" y="452" width="142" height="36" rx="18" fill="#ffddbe"/>
+    <text x="331" y="476" text-anchor="middle" font-size="16" font-weight="650" fill="#9b4d0c">高指令 · 低支持</text>
+
+    <rect x="450" y="265" width="430" height="245" rx="20" fill="#f1ecfb" stroke="#9c7bd4" stroke-width="2"/>
+    <text x="478" y="311" font-size="27" font-weight="700" fill="#66439f">授权式（Delegating）</text>
+    <text x="478" y="347" font-size="18" fill="#34445e">能力很高 · 意愿稳定</text>
+    <text x="478" y="390" font-size="20" fill="#172033">只对齐目标、风险和检查点</text>
+    <text x="478" y="423" font-size="20" fill="#172033">把决策空间交还给成员</text>
+    <rect x="710" y="452" width="142" height="36" rx="18" fill="#ddd1f1"/>
+    <text x="781" y="476" text-anchor="middle" font-size="16" font-weight="650" fill="#66439f">低指令 · 低支持</text>
+  </g>
+  <path d="M140 676h930" stroke="#46556d" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M115 650V150" stroke="#46556d" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="605" y="714" text-anchor="middle" font-family="system-ui, sans-serif" font-size="19" fill="#34445e">指令行为：高 ←　　　　　　　　　　　　　　　　→ 低</text>
+  <text x="55" y="405" text-anchor="middle" transform="rotate(-90 55 405)" font-family="system-ui, sans-serif" font-size="19" fill="#34445e">支持行为：低 → 高</text>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0l10 5-10 5z" fill="#46556d"/></marker></defs>
+</svg>

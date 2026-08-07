@@ -42,6 +42,9 @@ const requiredFiles = [
 	"dist/404.html",
 	"dist/posts/index.html",
 	"dist/posts/hello-world/index.html",
+	"dist/posts/tech-leadership-beyond-coding/index.html",
+	"dist/images/posts/situational-leadership-zh.svg",
+	"dist/images/posts/tuckman-model-zh.svg",
 	"dist/notes/index.html",
 	"dist/notes/welcome/index.html",
 	"dist/tags/index.html",
@@ -57,6 +60,9 @@ const requiredFiles = [
 	"dist/en/about/index.html",
 	"dist/en/posts/index.html",
 	"dist/en/posts/hello-world/index.html",
+	"dist/en/posts/tech-leadership-beyond-coding/index.html",
+	"dist/images/posts/situational-leadership-en.svg",
+	"dist/images/posts/tuckman-model-en.svg",
 	"dist/en/notes/index.html",
 	"dist/en/notes/welcome/index.html",
 	"dist/en/tags/index.html",
@@ -160,6 +166,46 @@ assert.match(article, />分享<\/button>/);
 assert.match(article, /value="https:\/\/blog\.nalansitan\.com\/posts\/hello-world\/"/);
 assert.match(article, />复制链接<\/button>/);
 
+const techLeadershipArticle = await readFile(
+	"dist/posts/tech-leadership-beyond-coding/index.html",
+	"utf8",
+);
+const techLeadershipSource = await readFile(
+	"content/posts/tech-leadership-beyond-coding.md",
+	"utf8",
+);
+assert.equal(
+	techLeadershipSource.split("Tech Lead").length - 1,
+	1,
+	"Chinese article should use Tech Lead only in its first bilingual mention",
+);
+assert.match(techLeadershipArticle, /当上技术负责人之后，最难的不是技术/);
+assert.match(techLeadershipArticle, /技术负责人到底是个什么角色/);
+assert.match(
+	techLeadershipArticle,
+	/技术负责人到底是个什么角色[\s\S]*manager-vs-leader\.png[\s\S]*管理解决复杂性，领导应对变化[\s\S]*3P 框架：技术负责人的注意力分配表/,
+);
+assert.match(techLeadershipArticle, /编码（Programming）、人员（People）、流程（Process）/);
+assert.match(techLeadershipArticle, /编码（Programming）：保持技术手感/);
+assert.match(techLeadershipArticle, /持续参与实际开发，才能及时了解系统的复杂度、技术债和维护成本/);
+assert.doesNotMatch(techLeadershipArticle, /手碰代码|共同面对的摩擦/);
+assert.match(techLeadershipArticle, /参与代码审查、与团队成员结对编程、审阅团队的代码提交记录/);
+assert.match(techLeadershipArticle, /人员（People）：谦逊、尊重、信任/);
+assert.match(techLeadershipArticle, /谦逊（Humility）、尊重（Respect）和信任（Trust）/);
+assert.match(techLeadershipArticle, /流程（Process）：在合适的时候告诉别人怎么做/);
+assert.match(techLeadershipArticle, /指令式（Directing）/);
+assert.match(techLeadershipArticle, /教练式（Coaching）/);
+assert.match(techLeadershipArticle, /支持式（Supporting）/);
+assert.match(techLeadershipArticle, /授权式（Delegating）/);
+assert.match(techLeadershipArticle, /第一次承担这类任务，意愿很强但方法和经验尚未建立/);
+assert.match(techLeadershipArticle, /src="\/images\/posts\/situational-leadership-zh\.svg"/);
+assert.match(techLeadershipArticle, /src="\/images\/posts\/tuckman-model-zh\.svg"/);
+assert.match(techLeadershipArticle, /ISGS/);
+assert.match(techLeadershipArticle, /情境领导力/);
+assert.match(techLeadershipArticle, /所有模型都是错的，但有些是有用的/);
+assert.match(techLeadershipArticle, /src="\/images\/posts\/manager-vs-leader\.png"/);
+assert.match(techLeadershipArticle, /href="\/en\/posts\/tech-leadership-beyond-coding\/"/);
+
 const posts = await readFile("dist/posts/index.html", "utf8");
 assert.match(posts, /搜索/);
 assert.match(posts, /标签/);
@@ -259,6 +305,30 @@ assert.match(englishArticle, /data-lang="en"/);
 assert.match(englishArticle, />Comments<\/h2>/);
 assert.match(englishArticle, />Share<\/button>/);
 assert.match(englishArticle, />Copy link<\/button>/);
+
+const englishTechLeadershipArticle = await readFile(
+	"dist/en/posts/tech-leadership-beyond-coding/index.html",
+	"utf8",
+);
+assert.match(
+	englishTechLeadershipArticle,
+	/The Hardest Part of Becoming a Tech Lead Isn.t Technical/,
+);
+assert.match(englishTechLeadershipArticle, /What Exactly Is a Tech Lead/);
+assert.match(
+	englishTechLeadershipArticle,
+	/What Exactly Is a Tech Lead[\s\S]*manager-vs-leader\.png[\s\S]*Management Handles Complexity; Leadership Navigates Change[\s\S]*The 3P Framework/,
+);
+assert.match(englishTechLeadershipArticle, /Programming: Stay Technically Grounded/);
+assert.match(englishTechLeadershipArticle, /People: Humility, Respect, and Trust/);
+assert.match(englishTechLeadershipArticle, /Process: Give Direction at the Right Time/);
+assert.match(englishTechLeadershipArticle, /ISGS/);
+assert.match(englishTechLeadershipArticle, /Situational Leadership/);
+assert.match(englishTechLeadershipArticle, /src="\/images\/posts\/situational-leadership-en\.svg"/);
+assert.match(englishTechLeadershipArticle, /src="\/images\/posts\/tuckman-model-en\.svg"/);
+assert.match(englishTechLeadershipArticle, /All models are wrong, but some are useful/);
+assert.match(englishTechLeadershipArticle, /src="\/images\/posts\/manager-vs-leader\.png"/);
+assert.match(englishTechLeadershipArticle, /href="\/posts\/tech-leadership-beyond-coding\/"/);
 
 const englishNote = await readFile("dist/en/notes/welcome/index.html", "utf8");
 assert.match(englishNote, /class="giscus-comments/);
